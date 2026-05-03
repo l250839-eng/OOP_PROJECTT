@@ -1,56 +1,49 @@
-# 🎓 Academic Office Replacement System (OOP Project)
+# 🏫 Academic Office Replacement System
 
 ## 📌 Overview
-This project is a terminal-based Academic Management System built using **C++ and Object-Oriented Programming (OOP)** concepts.  
-It simulates a real university academic office with features like student management, course registration, grading system, scheduling, and file-based database handling.
-
-The goal is to replace a traditional academic portal with a modular, automated system.
+A terminal-based Academic Management System built using C++ and OOP principles. It replaces manual academic processes with an automated, file-based system.
 
 ---
 
-## 🚀 Features
-
-### 👨‍🎓 Student Management
-- Regular Students (GPA-based system)
-- Scholarship Students (minimum GPA required, probation system)
-- Exchange Students (Pass/Fail grading)
-
-### 📚 Course System
-- Core Courses (final exam heavy)
-- Elective Courses (assignments + project)
-- Lab Courses (continuous assessment, no final exam)
-
-### 🧪 Assessment System
-- Exams
-- Quizzes
-- Assignments
-- Weighted grading system (configurable from file)
-
-### 🏫 Scheduling System
-- Automatic venue allocation
-- Capacity checking
-- Conflict detection (time + room conflicts)
-- Multi-venue distribution for large classes
-
-### 👨‍🏫 Teacher System
-- Feedback system (1–5 rating)
-- Average teacher score calculation
-
-### 💾 File-Based Database
-- Persistent storage using `.txt 
-- Data survives program restart
+## 🎯 Features
+- Student, Teacher, and Course management
+- Multiple student types (Regular, Scholarship, Exchange)
+- Polymorphic grading system (Exam, Quiz, Assignment)
+- Smart registration with capacity & conflict checking
+- Teacher feedback system (rating + comments)
+- Scheduling system with venue allocation
+- File-based database for data persistence
 
 ---
 
-## 🧠 Concepts Used
-- Object-Oriented Programming (OOP)
-- Inheritance & Polymorphism
-- Abstract Classes
-- File Handling in C++
-- Dynamic Memory Management
-- Data Structures (vectors, arrays)
-- Modular Design
+## 🧱 Core Components
+- **AcademicEntity**: Base class for all users  
+- **Student / Teacher**: Derived user types  
+- **Course**: Core, Elective, Lab courses  
+- **Assessment**: Exam, Quiz, Assignment  
+- **DatabaseManager**: Handles file I/O  
+- **Scheduler**: Manages time slots & venues  
 
 ---
 
-## 🏗️ Project Structure
+## 📁 Data Files
+- Students.txt  
+- Teachers.txt  
+- Courses.txt  
+- Venues.txt  
+- sections.txt  
+- assessments.txt  
+- weightages.txt  
+
+---
+
+## 🛠️ Tech Stack
+- C++
+- OOP (Inheritance, Polymorphism, Abstraction)
+- File Handling (TXT/CSV)
+- STL
+
+---
+
+## 🚀 Goal
+To simulate a real academic office system with automation, persistence, and smart scheduling.
