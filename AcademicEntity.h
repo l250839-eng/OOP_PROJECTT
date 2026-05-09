@@ -1,29 +1,19 @@
-#pragma once
+#ifndef ACADEMIC_ENTITY_H
+#define ACADEMIC_ENTITY_H
 
 #include <iostream>
-#include <string>
 using namespace std;
 
-class AcademicEntity
-{
+class AcademicEntity {
 protected:
-    string Id;
+    string ID;
     string name;
     string email;
 
 public:
-    
-    AcademicEntity(const string& id,
-        const string& name,
-        const string& email);
-
-    
+    AcademicEntity(string id = "", string n = "", string e = "");
     virtual void displayProfile() = 0;
-
-   
-    string getID() const;
-    string getName() const;
-    string getEmail() const;
-
-    virtual ~AcademicEntity() {}
+    virtual ~AcademicEntity();
 };
+
+#endif
