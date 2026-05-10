@@ -1,85 +1,181 @@
 #include "Student.h"
-#include <iostream>
-using namespace std;
 
-// ---------------- BASE STUDENT ----------------
+
+// BASE STUDENT
+
+
 Student::Student(string id, string n, string e, double g)
     : AcademicEntity(id, n, e) {
+
     GPA = g;
+
+    completedCount = 0;
+    pfCount = 0;
+
+    probation = false;
 }
+
+
+
+void Student::calculateGPA() {
+
+    if (completedCount == 0) {
+        GPA = 0;
+        return;
+    }
+
+    double total = 0;
+
+    for (int i = 0; i < completedCount; i++) {
+
+        double p = courseGrades[i];
+
+        if (p >= 85) total += 4.0;
+        else if (p >= 80) total += 3.7;
+        else if (p >= 75) total += 3.3;
+        else if (p >= 70) total += 3.0;
+        else if (p >= 65) total += 2.7;
+        else if (p >= 60) total += 2.0;
+        else if (p >= 50) total += 1.0;
+        else total += 0;
+    }
+
+    GPA = total / completedCount;
+}
+
 
 double Student::getGPA() {
     return GPA;
 }
 
-Student::~Student() {}
+
+void Student::addCompletedCourse(string course, double percentage) {
+
+    if (completedCount >= 20) {
+        cout << "ERROR: Course limit reached!\n";
+        return;
+    }
+
+    completedCourses[completedCount] = course;
+    courseGrades[completedCount] = percentage;
+
+    completedCount++;
+
+    calculateGPA();
+}
 
 
-// ---------------- REGULAR STUDENT ----------------
+void Student::viewTranscript() {
+
+    cout << "\n===== TRANSCRIPT =====\n";
+
+    for (int i = 0; i < completedCount; i++) {
+
+        cout << completedCourses[i]
+            << " : "
+            << courseGrades[i]
+            << "%\n";
+    }
+
+    cout << "GPA: " << GPA << endl;
+}
+
+
+
+void Student::addPassFailCourse(string course, bool pass) {
+
+    if (pfCount >= 20) {
+        cout << "ERROR: Pass/Fail limit reached!\n";
+        return;
+    }
+
+    passFailCourses[pfCount] = course;
+    passStatus[pfCount] = pass;
+
+    pfCount++;
+}
+
+
+void Student::checkProbation() {
+    
+}
+
+
+string Student::getID() {
+    return ID;
+}
+
+string Student::getName() {
+    return name;
+}
+
+
 RegularStudent::RegularStudent(string id, string n, string e, double g)
     : Student(id, n, e, g) {
 }
 
-double RegularStudent::calculateGPA() {
-    return GPA;
-}
-
-void RegularStudent::viewTranscript() {
-    cout << "Regular Transcript | GPA: " << GPA << endl;
-}
-
 void RegularStudent::displayProfile() {
-    cout << "[Regular Student] " << name << " | ID: " << ID
-        << " | GPA: " << GPA << endl;
+
+    cout << "\n===== REGULAR STUDENT =====\n";
+    cout << "ID: " << ID << endl;
+    cout << "Name: " << name << endl;
+    cout << "Email: " << email << endl;
+    cout << "GPA: " << GPA << endl;
 }
 
 
-// ---------------- SCHOLARSHIP STUDENT ----------------
-ScholarshipStudent::ScholarshipStudent(string id, string n, string e, double g)
+// SCHOLARSHIP STUDENT
+
+
+ScholarshipStudent::ScholarshipStudent(string id, string n, string e, double g, double min)
     : Student(id, n, e, g) {
-    minGPA = 3.0;
-    status = "Active";
+
+    minGPA = min;
 }
 
-double ScholarshipStudent::calculateGPA() {
-    if (GPA < minGPA)
-        status = "Probation";
-    else
-        status = "Active";
+void ScholarshipStudent::checkProbation() {
 
-    return GPA;
-}
-
-void ScholarshipStudent::viewTranscript() {
-    cout << "Scholarship GPA: " << GPA << " | Status: " << status << endl;
+    probation = (GPA < minGPA);
 }
 
 void ScholarshipStudent::displayProfile() {
-    cout << "[Scholarship Student] " << name
-        << " | GPA: " << GPA
-        << " | Status: " << status << endl;
+
+    cout << "\n===== SCHOLARSHIP STUDENT =====\n";
+    cout << "ID: " << ID << endl;
+    cout << "Name: " << name << endl;
+    cout << "Email: " << email << endl;
+    cout << "GPA: " << GPA << endl;
+
+    cout << "STATUS: " << (probation ? "PROBATION" : "SAFE") << endl;
 }
 
 
-// ---------------- EXCHANGE STUDENT ----------------
+// EXCHANGE STUDENT
+
+
 ExchangeStudent::ExchangeStudent(string id, string n, string e)
-    : Student(id, n, e, 0.0) {
-    result = "Pending";
+    : Student(id, n, e, 0) {
 }
 
-double ExchangeStudent::calculateGPA() {
-    return 0;
-}
-
-void ExchangeStudent::setResult(string r) {
-    result = r;
+void ExchangeStudent::calculateGPA() {
+    GPA = 0;
 }
 
 void ExchangeStudent::viewTranscript() {
-    cout << "Exchange Result: " << result << endl;
+
+    cout << "\n===== PASS / FAIL TRANSCRIPT =====\n";
+
+    for (int i = 0; i < pfCount; i++) {
+
+        cout << passFailCourses[i] << " : "
+            << (passStatus[i] ? "PASS" : "FAIL") << endl;
+    }
 }
 
 void ExchangeStudent::displayProfile() {
-    cout << "[Exchange Student] " << name
-        << " | Result: " << result << endl;
+
+    cout << "\n===== EXCHANGE STUDENT =====\n";
+    cout << "ID: " << ID << endl;
+    cout << "Name: " << name << endl;
+    cout << "Email: " << email << endl;
 }
