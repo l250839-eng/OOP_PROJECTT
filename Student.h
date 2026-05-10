@@ -2,59 +2,112 @@
 #define STUDENT_H
 
 #include "AcademicEntity.h"
+#include <iostream>
+#include <string>
 
-// ---------------- BASE STUDENT ----------------
+using namespace std;
+
 class Student : public AcademicEntity {
+
 protected:
+
     double GPA;
 
+    string completedCourses[20];
+    double courseGrades[20];
+    int completedCount;
+
+    string passFailCourses[20];
+    bool passStatus[20];
+    int pfCount;
+
+    bool probation;
+
 public:
-    Student(string id = "", string n = "", string e = "", double g = 0.0);
 
-    virtual double calculateGPA() = 0;
-    virtual void viewTranscript() = 0;
+    Student(string id = "",
+        string n = "",
+        string e = "",
+        double g = 0);
 
+    virtual ~Student() {}
+
+    // GPA SYSTEM
+    virtual void calculateGPA();
     double getGPA();
-    virtual ~Student();
+
+    void addCompletedCourse(string course, double percentage);
+
+    virtual void viewTranscript();
+
+    // PASS / FAIL
+    void addPassFailCourse(string course, bool pass);
+
+    // PROBATION
+    virtual void checkProbation();
+
+   
+    virtual void displayProfile() = 0;
+
+    // GETTERS
+    string getID();
+    string getName();
 };
 
-// ---------------- REGULAR ----------------
-class RegularStudent : public Student {
-public:
-    RegularStudent(string id = "", string n = "", string e = "", double g = 0.0);
 
-    double calculateGPA() override;
-    void viewTranscript() override;
+
+// REGULAR STUDENT
+
+
+class RegularStudent : public Student {
+
+public:
+
+    RegularStudent(string id = "",
+        string n = "",
+        string e = "",
+        double g = 0);
+
     void displayProfile() override;
 };
 
-// ---------------- SCHOLARSHIP ----------------
+
+// SCHOLARSHIP STUDENT
+
 class ScholarshipStudent : public Student {
+
 private:
     double minGPA;
-    string status;
 
 public:
-    ScholarshipStudent(string id = "", string n = "", string e = "", double g = 0.0);
 
-    double calculateGPA() override;
-    void viewTranscript() override;
+    ScholarshipStudent(string id = "",
+        string n = "",
+        string e = "",
+        double g = 0,
+        double min = 3.0);
+
+    void checkProbation() override;
     void displayProfile() override;
 };
 
-// ---------------- EXCHANGE ----------------
+
+
+
+// EXCHANGE STUDENT
+
+
 class ExchangeStudent : public Student {
-private:
-    string result;
 
 public:
-    ExchangeStudent(string id = "", string n = "", string e = "");
 
-    double calculateGPA() override;
-    void setResult(string r);
+    ExchangeStudent(string id = "",
+        string n = "",
+        string e = "");
+
+    void calculateGPA() override;
     void viewTranscript() override;
     void displayProfile() override;
 };
 
 #endif
-
