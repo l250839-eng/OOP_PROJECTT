@@ -1,18 +1,39 @@
+
 #ifndef TEACHER_H
 #define TEACHER_H
 
-#include "AcademicEntity.h"
+#include <iostream>
+#include <string>
+using namespace std;
 
-class Teacher : public AcademicEntity {
+class Teacher {
+
 private:
-    double averageFeedback;
+
+    string ID;
+    string name;
+    string email;
+
+    int ratings[50];
+    string comments[50];
+    int count;
 
 public:
-    Teacher(string id = "", string n = "", string e = "", double f = 0.0);
 
-    void addFeedback(double rating);
-    double getFeedback();
-    void displayProfile() override;
+    Teacher(string id = "",
+        string n = "",
+        string e = "");
+
+    void addFeedback(int rating, string comment);
+
+    double getAverageRating();
+
+    void displayProfile();
+
+    void displayFeedback();  
+
+    string getID();
+    string getName();
 };
 
 #endif
