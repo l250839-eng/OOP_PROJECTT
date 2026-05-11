@@ -1,86 +1,123 @@
 #include "Teacher.h"
 
+// =====================================================
+// CONSTRUCTOR
+// =====================================================
 
+Teacher::Teacher(string id,
+    string n,
+    string e)
+    : AcademicEntity(id, n, e) {
 
-Teacher::Teacher(string id, string n, string e) {
+    rating = 0;
 
-    ID = id;
-    name = n;
-    email = e;
+    commentCount = 0;
 
-    count = 0;
+    courseCount = 0;
 }
 
+// =====================================================
+// FEEDBACK
+// =====================================================
 
+void Teacher::addFeedback(double score,
+    string comment) {
 
-void Teacher::addFeedback(int rating, string comment) {
+    // REPLACE OLD RATING
+    rating = score;
 
-    if (count >= 50) {
-        cout << "Feedback limit reached!\n";
-        return;
-    }
+    comments[commentCount] = comment;
 
-    if (rating < 1) rating = 1;
-    if (rating > 5) rating = 5;
-
-    ratings[count] = rating;
-    comments[count] = comment;
-
-    count++;
+    commentCount++;
 }
 
-
+// =====================================================
+// GET RATING
+// =====================================================
 
 double Teacher::getAverageRating() {
 
-    if (count == 0)
-        return 0;
-
-    double sum = 0;
-
-    for (int i = 0; i < count; i++) {
-        sum += ratings[i];
-    }
-
-    return sum / count;
+    return rating;
 }
 
+// =====================================================
+// ASSIGN COURSE
+// =====================================================
 
+void Teacher::assignCourse(string cid) {
+
+    assignedCourses[courseCount] = cid;
+
+    courseCount++;
+}
+
+// =====================================================
+// DISPLAY PROFILE
+// =====================================================
 
 void Teacher::displayProfile() {
 
     cout << "\n===== TEACHER PROFILE =====\n";
-    cout << "ID: " << ID << endl;
-    cout << "Name: " << name << endl;
-    cout << "Email: " << email << endl;
-    cout << "Avg Rating: " << getAverageRating() << endl;
-}
 
+    cout << "ID: "
+        << ID
+        << endl;
 
+    cout << "Name: "
+        << name
+        << endl;
 
-void Teacher::displayFeedback() {
+    cout << "Email: "
+        << email
+        << endl;
 
-    cout << "\n===== TEACHER FEEDBACK =====\n";
+    cout << "Avg Rating: "
+        << rating
+        << endl;
 
-    if (count == 0) {
-        cout << "No feedback available.\n";
-        return;
+    // SHOW COMMENTS
+    if (commentCount > 0) {
+
+        cout << "\nComments:\n";
+
+        for (int i = 0; i < commentCount; i++) {
+
+            cout << "- "
+                << comments[i]
+                << endl;
+        }
     }
 
-    for (int i = 0; i < count; i++) {
+    // SHOW COURSES
+    if (courseCount > 0) {
 
-        cout << "Rating: " << ratings[i]
-            << " | Comment: " << comments[i]
-            << endl;
+        cout << "\nAssigned Courses:\n";
+
+        for (int i = 0; i < courseCount; i++) {
+
+            cout << assignedCourses[i]
+                << endl;
+        }
     }
+
+    cout << endl;
 }
 
-
+// =====================================================
+// GETTERS
+// =====================================================
 
 string Teacher::getID() {
+
     return ID;
 }
 
 string Teacher::getName() {
+
     return name;
+}
+
+string Teacher::getEmail() {
+
+    return email;
 }
