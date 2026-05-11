@@ -1,9 +1,22 @@
 #include "AcademicEntity.h"
 
-AcademicEntity::AcademicEntity(string id, string n, string e) {
-    ID = id;
-    name = n;
-    email = e;
+AcademicEntity::AcademicEntity(string id,
+    string name,
+    string email) {
+
+    this->ID = id;
+    this->name = name;
+    this->email = email;
 }
 
-AcademicEntity::~AcademicEntity() {}
+string AcademicEntity::getID() {
+    return ID;
+}
+
+string AcademicEntity::getName() {
+    return name;
+}
+
+string AcademicEntity::getEmail() {
+    return email;
+}

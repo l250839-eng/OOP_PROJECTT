@@ -1,19 +1,28 @@
-#ifndef ACADEMIC_ENTITY_H
-#define ACADEMIC_ENTITY_H
+#ifndef ACADEMICENTITY_H
+#define ACADEMICENTITY_H
 
-#include <iostream>
+#include <string>
 using namespace std;
 
 class AcademicEntity {
+
 protected:
+
     string ID;
     string name;
     string email;
 
 public:
-    AcademicEntity(string id = "", string n = "", string e = "");
+
+    AcademicEntity(string id = "",
+        string name = "",
+        string email = "");
+
+    string getID();
+    string getName();
+    string getEmail();   
+
     virtual void displayProfile() = 0;
-    virtual ~AcademicEntity();
 };
 
 #endif
