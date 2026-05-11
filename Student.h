@@ -1,10 +1,11 @@
 #ifndef STUDENT_H
 #define STUDENT_H
 
-#include "AcademicEntity.h"
-
 #include <iostream>
+#include <fstream>
 #include <string>
+
+#include "AcademicEntity.h"
 
 using namespace std;
 
@@ -12,94 +13,32 @@ class Student : public AcademicEntity {
 
 protected:
 
-    string type;
+    float GPA;
 
-    double GPA;
-
-    // TRANSCRIPT
-    string completedCourses[20];
-
-    double courseGrades[20];
-
-    int completedCount;
-
-    // ENROLLED
-    string enrolledSections[20];
-
+    string enrolledSections[10];
     int enrolledCount;
-
-    // PASS FAIL
-    string passFailCourses[20];
-
-    bool passStatus[20];
-
-    int pfCount;
-
-    bool probation;
 
 public:
 
-    Student(string id = "",
-        string n = "",
-        string e = "",
-        string t = "Regular",
-        double g = 0);
+    Student();
 
-    virtual ~Student() {}
+    Student(
+        string id,
+        string n,
+        string e,
+        float g
+    );
 
-    // =====================================================
-    // GPA
-    // =====================================================
-
-    virtual void calculateGPA();
-
-    double getGPA();
-
-    void addCompletedCourse(string course,
-        double percentage);
-
-    // =====================================================
-    // REGISTRATION
-    // =====================================================
-
-    void addEnrolledSection(string sec);
-
-    // =====================================================
-    // TRANSCRIPT
-    // =====================================================
+    virtual void calculateGPA() = 0;
 
     virtual void viewTranscript();
 
-    // =====================================================
-    // PASS FAIL
-    // =====================================================
+    void addEnrolledSection(string sec);
 
-    void addPassFailCourse(string course,
-        bool pass);
+    float getGPA();
 
-    // =====================================================
-    // PROBATION
-    // =====================================================
-
-    virtual void checkProbation();
-
-    // =====================================================
-    // DISPLAY
-    // =====================================================
-
-    virtual void displayProfile() = 0;
-
-    // =====================================================
-    // GETTERS
-    // =====================================================
-
-    string getEmail();
-
-    string getID();
-
-    string getName();
-
-    string getType();
+    virtual string getType() = 0;
+    void setGPA(float g);
 };
 
 // =====================================================
@@ -110,12 +49,19 @@ class RegularStudent : public Student {
 
 public:
 
-    RegularStudent(string id = "",
-        string n = "",
-        string e = "",
-        double g = 0);
+    RegularStudent();
 
-    void displayProfile() override;
+    RegularStudent(
+        string id,
+        string n,
+        string e,
+        float g
+    );
+
+    void calculateGPA();
+
+    void displayProfile();
+    string getType();
 };
 
 // =====================================================
@@ -126,19 +72,26 @@ class ScholarshipStudent : public Student {
 
 private:
 
-    double minGPA;
-
+    float minGPA;
+    string status;
+    
 public:
 
-    ScholarshipStudent(string id = "",
-        string n = "",
-        string e = "",
-        double g = 0,
-        double min = 3.0);
+    ScholarshipStudent();
 
-    void checkProbation() override;
+    ScholarshipStudent(
+        string id,
+        string n,
+        string e,
+        float g,
+        float min
+    );
 
-    void displayProfile() override;
+    void calculateGPA();
+
+    void checkProbation();
+    string getType();
+    void displayProfile();
 };
 
 // =====================================================
@@ -149,15 +102,17 @@ class ExchangeStudent : public Student {
 
 public:
 
-    ExchangeStudent(string id = "",
-        string n = "",
-        string e = "");
+    ExchangeStudent();
 
-    void calculateGPA() override;
+    ExchangeStudent(
+        string id,
+        string n,
+        string e
+    );
 
-    void viewTranscript() override;
-
-    void displayProfile() override;
+    void calculateGPA();
+    string getType();
+    void displayProfile();
 };
 
 #endif
