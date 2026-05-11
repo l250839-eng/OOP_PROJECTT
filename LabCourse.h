@@ -8,13 +8,22 @@ class LabCourse : public Course {
 
 public:
 
-    LabCourse(string id = "",
-        string t = "",
-        string tid = "");
+    LabCourse(
+        string cid,
+        string t,
+        string tid
+    );
 
-    double calculateFinalGrade() override;
+    float calculateFinalGrade(
+        float exam,
+        float assignment,
+        float quiz
+    );
 
-    int getExamDuration() override;
+    int getExamDuration();
+
+    string getType();
 };
+
 
 #endif

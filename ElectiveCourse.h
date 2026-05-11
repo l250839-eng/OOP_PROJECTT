@@ -8,13 +8,21 @@ class ElectiveCourse : public Course {
 
 public:
 
-    ElectiveCourse(string id = "",
-        string t = "",
-        string tid = "");
+    ElectiveCourse(
+        string cid,
+        string t,
+        string tid
+    );
 
-    double calculateFinalGrade() override;
+    float calculateFinalGrade(
+        float exam,
+        float assignment,
+        float quiz
+    );
 
-    int getExamDuration() override;
+    int getExamDuration();
+
+    string getType();
 };
 
 #endif

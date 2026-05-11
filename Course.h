@@ -1,12 +1,8 @@
-
 #ifndef COURSE_H
 #define COURSE_H
 
 #include <iostream>
 #include <string>
-
-#include "Assessment.h"
-#include "Student.h"
 
 using namespace std;
 
@@ -17,41 +13,32 @@ protected:
     string courseID;
     string title;
     string teacherID;
-    string type;
-
-    Assessment* assessments[20];
-    int assessmentCount;
-
-    Student* students[50];
-    int studentCount;
 
 public:
 
-    // ================= CONSTRUCTOR =================
-    Course(string id = "",
-        string t = "",
-        string tid = "",
-        string ty = "");
+    Course();
 
-    // ================= STUDENTS =================
-    void enrollStudent(Student* s);
-    int getStudentCount();
+    Course(
+        string cid,
+        string t,
+        string tid
+    );
 
-    // ================= ASSESSMENTS =================
-    void addAssessment(Assessment* a);
+    virtual float calculateFinalGrade(
+        float exam,
+        float assignment,
+        float quiz
+    ) = 0;
 
-    // ================= GETTERS =================
-    string getCourseID();
-    string getTitle();
-    string getTeacherID();
-    string getType();
-
-    // ================= CORE =================
-    virtual double calculateFinalGrade() = 0;
     virtual int getExamDuration() = 0;
 
-    // ================= DESTRUCTOR =================
-    virtual ~Course();
+    virtual string getType() = 0;
+
+    string getCourseID();
+
+    string getTeacherID();
+    string getTitle();
 };
+
 
 #endif
