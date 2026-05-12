@@ -7,23 +7,25 @@
 using namespace std;
 
 class WeightageManager {
-
 private:
-    string type[10];
-    int exam[10];
-    int assignment[10];
-    int quiz[10];
-    int count;
+    string courseTypes[10];
+    float  examW[10];
+    float  assignW[10];
+    float  quizW[10];
+    int    count;
 
-public:
-
+    static WeightageManager* instance;  // singleton
     WeightageManager();
 
-    void loadFromFile(string filename);
+public:
+    // Singleton accessor — loads file once
+    static WeightageManager& get();
 
-    int getExamWeight(string courseType);
-    int getAssignmentWeight(string courseType);
-    int getQuizWeight(string courseType);
+    void loadFromFile(string filename = "weightages.txt");
+
+    float getExamWeight(string courseType);
+    float getAssignmentWeight(string courseType);
+    float getQuizWeight(string courseType);
 };
 
 #endif
