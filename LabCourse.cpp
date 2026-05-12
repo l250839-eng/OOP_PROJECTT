@@ -1,31 +1,27 @@
 #include "LabCourse.h"
+#include "WeighatgeManager.h"
 
-LabCourse::LabCourse(
-    string cid,
-    string t,
-    string tid
-) : Course(cid, t, tid) {
+LabCourse::LabCourse() {}
 
+LabCourse::LabCourse(string cid, string t, string tid)
+    : Course(cid, t, tid, 1,
+        0.0f,  // Lab has no exam
+        WeightageManager::get().getAssignmentWeight("Lab"),
+        WeightageManager::get().getQuizWeight("Lab"))
+{
 }
 
-float LabCourse::calculateFinalGrade(
-    float exam,
-    float assignment,
-    float quiz
-) {
-
-    return (
-        assignment * 0.60 +
-        quiz * 0.40
-        );
+float LabCourse::calculateFinalPercentage(float /*exam*/, float assignment, float quiz)
+{
+    return (assignment * assignmentWeight) + (quiz * quizWeight);
 }
 
-int LabCourse::getExamDuration() {
+string LabCourse::getCourseType() { return "Lab"; }
 
-    return 0;
-}
-
-string LabCourse::getType() {
-
-    return "Lab";
+void LabCourse::displayCourse()
+{
+    Course::displayCourse();
+    cout << "\nType       : Lab (No Exam)";
+    cout << "\nWeightages : Assign=" << assignmentWeight * 100 << "% "
+        << "Quiz=" << quizWeight * 100 << "%\n";
 }
