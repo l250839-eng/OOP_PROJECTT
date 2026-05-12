@@ -1,74 +1,132 @@
 #ifndef STUDENT_H
 #define STUDENT_H
+
 #include <iostream>
-#include <fstream>
 #include <string>
+
 #include "AcademicEntity.h"
+#include "Course.h"
+
 using namespace std;
 
 // =====================================================
-// ABSTRACT BASE: Student
+// BASE STUDENT CLASS
 // =====================================================
-class Student : public AcademicEntity {
+
+class Student : public AcademicEntity
+{
 protected:
-    float  GPA;
-    string enrolledSections[10];
-    int    enrolledCount;
+
+    float GPA;
+
+    // Maximum 10 enrolled courses
+    Course* enrolledCourses[10];
+
+    int enrolledCount;
 
 public:
-    Student();
-    Student(string id, string n, string e, float g);
 
-    virtual void   calculateGPA() = 0;
-    virtual void   viewTranscript();          // base version shows numeric GPA
-    void           addEnrolledSection(string sec);
-    float          getGPA();
+    Student();
+
+    Student(string id,
+        string n,
+        string e,
+        float g);
+
+    // Course Registration
+    void enrollCourse(Course* c);
+
+    // GPA Calculation
+    virtual void calculateGPA() = 0;
+
+    // Transcript
+    virtual void viewTranscript();
+
+    // Getter
+    float getGPA();
+    float convertPercentageToGPA(float percentage);
+    // Student Type
     virtual string getType() = 0;
-    void           setGPA(float g);
 };
 
 // =====================================================
 // REGULAR STUDENT
 // =====================================================
-class RegularStudent : public Student {
+
+class RegularStudent : public Student
+{
 public:
+
     RegularStudent();
-    RegularStudent(string id, string n, string e, float g);
-    void   calculateGPA() override;
-    void   displayProfile() override;
-    string getType() override;
+
+    RegularStudent(string id,
+        string n,
+        string e,
+        float g);
+
+    void calculateGPA();
+
+    void displayProfile();
+
+    string getType();
+
+    
 };
 
 // =====================================================
 // SCHOLARSHIP STUDENT
 // =====================================================
-class ScholarshipStudent : public Student {
+
+class ScholarshipStudent : public Student
+{
 private:
-    float  minGPA;
+
+    float minGPA;
+
     string status;
 
 public:
+
     ScholarshipStudent();
-    ScholarshipStudent(string id, string n, string e,
-        float g, float min);
-    void   calculateGPA() override;
-    void   checkProbation();
-    string getType() override;
-    void   displayProfile() override;
-    float  getMinGPA();
+
+    ScholarshipStudent(string id,
+        string n,
+        string e,
+        float g,
+        float min);
+
+    void calculateGPA();
+
+    void checkProbation();
+
+    void displayProfile();
+
+    string getType();
+
+    float getMinGPA();
 };
 
 // =====================================================
 // EXCHANGE STUDENT
 // =====================================================
-class ExchangeStudent : public Student {
+
+class ExchangeStudent : public Student
+{
 public:
+
     ExchangeStudent();
-    ExchangeStudent(string id, string n, string e);
-    void   calculateGPA() override;
-    void   viewTranscript() override;   // FIX: shows Pass/Fail, no numeric GPA
-    string getType() override;
-    void   displayProfile() override;
+
+    ExchangeStudent(string id,
+        string n,
+        string e);
+
+    void calculateGPA();
+
+    void viewTranscript();
+
+    void displayProfile();
+
+    string getType();
 };
 
 #endif

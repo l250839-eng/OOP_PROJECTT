@@ -12,54 +12,42 @@ class Teacher : public AcademicEntity {
 
 private:
 
-    // SIMPLE RATING SYSTEM
+    
     double rating;
 
-    // COMMENTS
+
+
+    float averageFeedback;
     string comments[20];
 
     int commentCount;
 
-    // COURSES
-    string assignedCourses[20];
+        string assignedCourses[20];
 
     int courseCount;
 
 public:
 
-    // =====================================================
-    // CONSTRUCTOR
-    // =====================================================
 
     Teacher(string id = "",
         string n = "",
         string e = "");
 
-    // =====================================================
-    // FEEDBACK
-    // =====================================================
-
+  
     void addFeedback(double score,
         string comment);
 
     double getAverageRating();
 
-    // =====================================================
-    // COURSES
-    // =====================================================
+    
 
     void assignCourse(string cid);
 
-    // =====================================================
-    // DISPLAY
-    // =====================================================
+   
 
     void displayProfile() override;
-
-    // =====================================================
-    // GETTERS
-    // =====================================================
-
+    float getAverageFeedback();
+    
     string getID();
 
     string getName();
