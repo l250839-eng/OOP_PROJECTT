@@ -2,27 +2,22 @@
 #define ELECTIVECOURSE_H
 
 #include "Course.h"
-#include "WeighatgeManager.h"
 
-class ElectiveCourse : public Course {
-
+class ElectiveCourse : public Course
+{
 public:
+    ElectiveCourse();
 
-    ElectiveCourse(
-        string cid,
+    ElectiveCourse(string cid,
         string t,
-        string tid
-    );
+        string tid);
 
-    float calculateFinalGrade(
-        float exam,
+    float calculateFinalPercentage(float exam,
         float assignment,
-        float quiz
-    );
+        float quiz);
 
-    int getExamDuration();
-
-    string getType();
+    string getCourseType();
+    
 };
 
 #endif

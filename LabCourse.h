@@ -2,28 +2,25 @@
 #define LABCOURSE_H
 
 #include "Course.h"
-#include "WeighatgeManager.h"
 
-class LabCourse : public Course {
-
+class LabCourse : public Course
+{
 public:
+    LabCourse();
 
-    LabCourse(
-        string cid,
+    LabCourse(string cid,
         string t,
-        string tid
-    );
+        string tid);
 
-    float calculateFinalGrade(
-        float exam,
+    float calculateFinalPercentage(float exam,
         float assignment,
-        float quiz
-    );
+        float quiz);
 
-    int getExamDuration();
-
-    string getType();
+    string getCourseType();
+    void displayCourse();
 };
+
+
 
 
 #endif

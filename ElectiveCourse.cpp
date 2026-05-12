@@ -1,34 +1,37 @@
 #include "ElectiveCourse.h"
 
+ElectiveCourse::ElectiveCourse()
+{
+}
 
-
-ElectiveCourse::ElectiveCourse(
-    string cid,
+ElectiveCourse::ElectiveCourse(string cid,
     string t,
-    string tid
-) : Course(cid, t, tid) {
-
+    string tid)
+    : Course(cid,
+        t,
+        tid,
+        3,
+        0.50f,
+        0.30f,
+        0.20f)
+{
 }
 
-float ElectiveCourse::calculateFinalGrade(
-    float exam,
+float ElectiveCourse::calculateFinalPercentage(float exam,
     float assignment,
-    float quiz
-) {
-
-    return (
-        exam * 0.40 +
-        assignment * 0.40 +
-        quiz * 0.20
-        );
+    float quiz)
+{
+    return (exam * examWeight)
+        + (assignment * assignmentWeight)
+        + (quiz * quizWeight);
 }
 
-int ElectiveCourse::getExamDuration() {
-
-    return 2;
-}
-
-string ElectiveCourse::getType() {
-
+string ElectiveCourse::getCourseType()
+{
     return "Elective";
 }
+
+
+
+
+

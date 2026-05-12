@@ -2,27 +2,22 @@
 #define CORECOURSE_H
 
 #include "Course.h"
-#include "WeighatgeManager.h"
 
-class CoreCourse : public Course {
-
+class CoreCourse : public Course
+{
 public:
+    CoreCourse();
 
-    CoreCourse(
-        string cid,
+    CoreCourse(string cid,
         string t,
-        string tid
-    );
+        string tid);
 
-    float calculateFinalGrade(
-        float exam,
+    float calculateFinalPercentage(float exam,
         float assignment,
-        float quiz
-    );
+        float quiz);
 
-    int getExamDuration();
-
-    string getType();
+    string getCourseType();
+    void displayCourse();
 };
 
 #endif
