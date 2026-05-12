@@ -17,7 +17,7 @@ protected:
 
     string enrolledSections[10];
     int enrolledCount;
-
+    
 public:
 
     Student();
@@ -28,7 +28,7 @@ public:
         string e,
         float g
     );
-
+   
     virtual void calculateGPA() = 0;
 
     virtual void viewTranscript();
@@ -92,6 +92,8 @@ public:
     void checkProbation();
     string getType();
     void displayProfile();
+    // In Student.h, inside the ScholarshipStudent class public section, add:
+    float getMinGPA();
 };
 
 // =====================================================

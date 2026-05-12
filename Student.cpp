@@ -313,6 +313,9 @@ void ScholarshipStudent::displayProfile() {
     cout << "GPA     : " << GPA << endl;
     cout << "Status  : " << status << endl;
 }
+// In Student.h, inside the ScholarshipStudent class public section, add:
+float ScholarshipStudent ::getMinGPA() 
+{ return minGPA; }
 
 // =====================================================
 // EXCHANGE STUDENT
