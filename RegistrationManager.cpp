@@ -1,44 +1,74 @@
 #include "RegistrationManager.h"
+#include <iostream>
+using namespace std;
 
-
-
-bool RegistrationManager::registerStudent(Student* student, Section* section) {
-
-    if (student == nullptr || section == nullptr) {
+bool RegistrationManager::registerStudent(
+    Student* student,
+    Section* targetSection,
+    Section* allSections[],
+    int       totalSections)
+{
+    // ?????????????????????????????????????????
+    // GUARD 1: capacity check
+    // ?????????????????????????????????????????
+    if (targetSection->isFull()) {
+        cout << "\nREGISTRATION FAILED: Section "
+            << targetSection->getSectionID()
+            << " is FULL ("
+            << targetSection->getStudentCount()
+            << " students).\n";
         return false;
     }
 
-   
-    for (int i = 0; i < section->getStudentCount(); i++) {
-
+    // ?????????????????????????????????????????
+    // GUARD 2: duplicate registration check
+    // ?????????????????????????????????????????
+    for (int i = 0; i < totalSections; i++) {
+        for (int j = 0; j < allSections[i]->getStudentCount(); j++) {
+            Student* enrolled = allSections[i]->getStudentAt(j);
+            if (enrolled != nullptr && enrolled->getID() == student->getID()) {
+                if (allSections[i]->getCourseID() == targetSection->getCourseID()) {
+                    cout << "\nREGISTRATION FAILED: "
+                        << student->getName()
+                        << " is already registered in course "
+                        << targetSection->getCourseID() << ".\n";
+                    return false;
+                }
+            }
+        }
     }
 
-    // ---------------- ADD STUDENT ----------------
-    section->addStudent(student);
+    // ?????????????????????????????????????????
+    // GUARD 3: time-slot conflict check
+    // ?????????????????????????????????????????
+    string targetSlot = targetSection->getTimeSlot();
 
-    cout << "Student " << student->getID()
-        << " registered in section "
-        << section->getSectionID() << endl;
+    for (int i = 0; i < totalSections; i++) {
+        if (allSections[i]->getSectionID() == targetSection->getSectionID())
+            continue;
 
+        if (allSections[i]->getTimeSlot() != targetSlot)
+            continue;
+
+        // This section shares the time slot — is the student in it?
+        for (int j = 0; j < allSections[i]->getStudentCount(); j++) {
+            Student* enrolled = allSections[i]->getStudentAt(j);
+            if (enrolled != nullptr && enrolled->getID() == student->getID()) {
+                cout << "\nREGISTRATION FAILED: TIME CONFLICT!\n"
+                    << "  " << student->getName()
+                    << " is already in section "
+                    << allSections[i]->getSectionID()
+                    << " at time slot [" << targetSlot << "].\n";
+                return false;
+            }
+        }
+    }
+
+    // ?????????????????????????????????????????
+    // ALL CHECKS PASSED
+    // ?????????????????????????????????????????
+    cout << "\nSUCCESS: " << student->getName()
+        << " registered in section " << targetSection->getSectionID()
+        << " [" << targetSlot << "]\n";
     return true;
-}
-
-// =====================================================
-// CONFLICT CHECK
-// =====================================================
-
-bool RegistrationManager::hasConflict(Section* s1, Section* s2) {
-
-    if (s1 == nullptr || s2 == nullptr) {
-        return false;
-    }
-
-   
-    if (s1->getTimeSlot() == s2->getTimeSlot() &&
-        s1->getVenue() == s2->getVenue()) {
-
-        return true;
-    }
-
-    return false;
 }
